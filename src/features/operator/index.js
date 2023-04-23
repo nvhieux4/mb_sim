@@ -100,7 +100,7 @@ export default function Operator() {
 
     const callApi = async (changePage = "") => {
         try {
-            const res = await operatorAPI.operatorsAPI(10, changePage);
+            const res = await operatorAPI.operatorsAPI(4, changePage);
             setContents(res);
         } catch (error) {
             console.log("êrer", error);
@@ -119,22 +119,11 @@ export default function Operator() {
         callApi();
     }, []);
 
-    const handleNextPage = () => {
-        if (contents.LastEvaluatedKey) {
-            callApi({
-                next: true,
-                key: contents.LastEvaluatedKey,
-            });
-        }
-    };
-
-    const handlePevPage = () => {
-        if (!contents.LastEvaluatedKey) {
-            callApi({
-                next: false,
-                key: contents.LastEvaluatedKey,
-            });
-        }
+    const handleChangePage = (nextPage) => {
+        callApi({
+            next: nextPage,
+            key: contents.LastEvaluatedKey,
+        });
     };
 
     return (
@@ -167,8 +156,8 @@ export default function Operator() {
                     // onChange={handleChangePaginationFilterSorter}
                     showSorterTooltip={false}
                 />
-                <Button onClick={handlePevPage}>Pev</Button>
-                <Button onClick={handleNextPage}>Next</Button>
+                <Button onClick={() => handleChangePage(false)}>Pev</Button>
+                <Button onClick={() => handleChangePage(true)}>Next</Button>
             </div>
         </>
     );

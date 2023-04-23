@@ -17,7 +17,8 @@ const operatorAPI = {
         return axiosDefault.post(url, data);
     },
     putOperatorAPI: (id, data) => {
-        const url = `dev/operators/${id}`;
+        const token = localStorage.getItem("accessToken");
+        const url = `dev/operators/${id}?accessToken=${token}`;
         return axiosDefault.put(url, data);
     },
     deleteOperatorAPI: (id) => {
